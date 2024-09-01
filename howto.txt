@@ -16,3 +16,41 @@ crate metwork
 create volume
 
 - docker volume create mysql_data
+
+after you can use next command inside /opt/docker/dockercompose folder to run services
+
+- docker compose up -d --build 
+
+now you can connect to phpadmin services
+
+- http://localhost:8080/
+
+user = root
+pass = mysecretpassword
+
+after run this:
+################################
+create database mydb;
+
+use mydb;
+
+create table mytable (
+id int AUTO_INCREMENT primary key,
+data text,
+datamodified timestamp default now()
+);
+
+insert into mytable(data) values("testdata01");
+insert into mytable(data) values("testdata02");
+insert into mytable(data) values("testdata03");
+################################
+
+after run this command from cli to create dump or run one.sh
+
+docker run --rm \
+  --name mydb-dump \
+  --network dockercompose-frontend \
+  -v mysql_data:/var/lib/mysql \
+  -v /opt/docker/dockercompose/task-13:/backup \
+  mysql:latest \
+  sh -c "mysqldump --column-statistics=0 -h mydb -u root -pmysecretpassword mydb > /backup/mydb.sql"

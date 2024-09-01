@@ -1,7 +1,0 @@
-docker run --rm \
-  --name mydb-dump \
-  --network dockercompose-frontend \
-  -v mysql_data:/var/lib/mysql \
-  -v /opt/docker/dockercompose/task-13:/backup \
-  mysql:latest \
-  sh -c "mysqldump --column-statistics=0 -h mydb -u root -pmysecretpassword mydb > /backup/mydb.sql"
