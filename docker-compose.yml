@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 
 services:
   frontend:
@@ -20,20 +20,23 @@ services:
       dockerfile: Dockerfile
     container_name: mydb
     environment:
-      MYSQL_ROOT_PASSWORD: mysecretpassword
+      # YSQL_ROOT_PASSWORD: mysecretpassword
+      - MARIADB_ROOT_PASSWORD=mysecretpassword
+      - MARIADB_USER=testuser
+      - MARIADB_PASSWORD=password
     volumes:
       - mysql:/var/lib/mysql
     networks:
       - dockercompose-frontend
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      # test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 15s
       retries: 5
 
 networks:
   dockercompose-frontend:
-    driver: bridge
 
 volumes:
   mysql:
