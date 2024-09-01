@@ -23,10 +23,8 @@ services:
     container_name: mydb
     environment:
       - MARIADB_ROOT_PASSWORD=mysecretpassword
-      - MARIADB_USER=testuser
-      - MARIADB_PASSWORD=password
     volumes:
-      - mysql:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     networks:
       - dockercompose-frontend
     healthcheck:
