@@ -1,0 +1,11 @@
+create folder 
+
+- sudo mkdir -p /opt/docker/dockercompose
+
+install docker compose
+- 
+
+own folder
+
+- sudo chown -R debian:debian /opt/docker/dockercompose
+
