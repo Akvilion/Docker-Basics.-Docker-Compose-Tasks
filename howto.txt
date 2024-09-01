@@ -9,3 +9,10 @@ own folder
 
 - sudo chown -R debian:debian /opt/docker/dockercompose
 
+crate metwork
+
+- docker network create dockercompose-frontend
+
+create volume
+
+- docker volume create mysql_data
