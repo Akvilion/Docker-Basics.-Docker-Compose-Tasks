@@ -1,9 +1,11 @@
+version: "3.8"
+
 services:
   frontend:
-    build: ./frontend
+    build: .
     container_name: frontend
     ports:
-      - "8080:80"
+      - 8080:80
     environment:
       PMA_HOST: mydb
       PMA_PORT: 3306
@@ -13,17 +15,17 @@ services:
       mydb:
         condition: service_healthy
   mydb:
-    build: ./db
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     container_name: mydb
     environment:
       MYSQL_ROOT_PASSWORD: mysecretpassword
-      MYSQL_DATABASE: mydb
     volumes:
       - mysql:/var/lib/mysql
     networks:
       - dockercompose-frontend
     healthcheck:
-      # test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       interval: 10s
       timeout: 15s
@@ -31,6 +33,7 @@ services:
 
 networks:
   dockercompose-frontend:
+    driver: bridge
 
 volumes:
   mysql:
