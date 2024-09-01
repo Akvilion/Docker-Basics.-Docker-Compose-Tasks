@@ -6,6 +6,8 @@ services:
     container_name: frontend
     ports:
       - 8080:80
+    expose:
+      - "80"
     environment:
       PMA_HOST: mydb
       PMA_PORT: 3306
@@ -20,7 +22,6 @@ services:
       dockerfile: Dockerfile
     container_name: mydb
     environment:
-      # YSQL_ROOT_PASSWORD: mysecretpassword
       - MARIADB_ROOT_PASSWORD=mysecretpassword
       - MARIADB_USER=testuser
       - MARIADB_PASSWORD=password
@@ -29,7 +30,6 @@ services:
     networks:
       - dockercompose-frontend
     healthcheck:
-      # test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 10s
       timeout: 15s
@@ -37,6 +37,8 @@ services:
 
 networks:
   dockercompose-frontend:
-
+    external: true
+      
 volumes:
-  mysql:
+  mysql_data:
+    external: true
