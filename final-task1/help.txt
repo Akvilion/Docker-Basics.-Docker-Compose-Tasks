@@ -1,0 +1,14 @@
+docker network create my-awesome-network
+docker network rm my-awesome-network
+
+docker volume create mysql
+docker volume create wordpress
+
+docker volume rm mysql wordpress
+
+docker exec -it my-awesome-database bash
+mysql -u root -p
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'%' IDENTIFIED BY 'wordpresspassword';
+FLUSH PRIVILEGES;
+
+docker-compose restart

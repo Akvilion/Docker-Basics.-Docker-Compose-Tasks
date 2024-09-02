@@ -1,0 +1,9 @@
+docker network create petclinic
+docker network rm petclinic
+
+
+docker volume create mysql_data
+docker volume create mysql_config
+docker volume rm mysql_data
+docker volume rm mysql_config
+

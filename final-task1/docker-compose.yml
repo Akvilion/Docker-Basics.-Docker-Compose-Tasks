@@ -1,0 +1,38 @@
+services:
+  my-awesome-database:
+    image: mysql:5.7
+    container_name: my-awesome-database
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpresspassword
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - my-awesome-network
+    restart: unless-stopped
+  my-awesome-wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-awesome-wordpress
+    ports:
+      - "8080:80"
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - my-awesome-network
+    restart: unless-stopped
+    depends_on:
+      - my-awesome-database
+
+networks:
+  my-awesome-network:
+    external: true
+
+volumes:
+  mysql:
+    external: true
+  wordpress:
+    external: true
